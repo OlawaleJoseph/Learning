@@ -18,6 +18,7 @@ addons:
   code_climate:
     repo_token:
       secure: MLXm2Ft7Eg7mZI0EzDWbYZgjkOIIdrtTyVAUm6QtNwph4AgMNQLAUmE117bU2Fq6mlPuJK3x5aKelfDIdP2QlTei5pNrtHZVONWUuUKwxP8C5vMdvnbYocgCOnYm7QXEyDYIwhFHFFfsqT07enS6y4gcrj97L3cfGGuFx29xzKXUUYTcXphC5XFAnFLlxS/chFnMMbyr/SpzfsEHm5iOMGgGmAds/w0mK3DgHgDn8xtO8lZqYegp3tfdgQtN3aWrYrtn4RZgx5aUcdcb1vv42rvejULmRcfGacehGuZmOwLCrtEqFqa8+V0+ChwKcykI8qPWczY9du69AH001haIQSpdmaudZs8ggM+Ju5sw3ERPBCoHYog3cfAWYGNX7/aDAAQ1hPc8DEa0nDHd/x/D1hLERYNVK8K56x2UfQcJQzze+IKPdgLQUfFIm+3hR/XFH1Kdg1x43N0tvfXT7g4Qm6b04/qB1oEtE0a/brzjD8IBWEOrfOys9BuDzyHDgaA5SOpen3dEHphFYrEzs728MZ/+LnY4LauZbWmEPgz+utvGWwE698ZcUWXst/8/tsIRWdhPvG/S22Au3WAUxLCHdvUAnb9RFmX0LatA07AEM4SbjFNUQNp35qosfIm04i61Zc/CsWP4SwWMYOFNTpfUH1i7xUlFUQ/yAzAenYwxMUU=
+
 before_script:
   - psql -c 'create database bus;' -U postgres
   - npm run build

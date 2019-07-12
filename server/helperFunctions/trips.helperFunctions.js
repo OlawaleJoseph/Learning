@@ -125,42 +125,42 @@ class TripHelperFunctions {
       origin: 'Ketu',
       destination: 'Ikorodu',
       fare: 100,
-      trip_date: '20/07/2019 15:00',
+      trip_date: '2019-07-23 17:30 +01:00',
     }, {
       origin: 'Ikorodu',
       destination: 'Ketu',
       fare: 100,
-      trip_date: '20/07/2019 13:00',
+      trip_date: '2019-07-23 18:30 +01:00',
     }, {
       origin: 'Maryland',
       destination: 'CMS',
       fare: 200,
-      trip_date: '20/07/2019 10:00',
+      trip_date: '2019-07-23 17:30 +01:00',
     }, {
       origin: 'Obalende',
       destination: 'Ajah',
       fare: 250,
-      trip_date: '20/07/2019 17:00',
+      trip_date: '2019-07-23 14:30 +01:00',
     }, {
       origin: 'Yaba',
       destination: 'Apapa',
       fare: 300,
-      trip_date: '20/07/2019 07:00',
+      trip_date: '2019-07-23 06:30 +01:00',
     }, {
       origin: 'Iyana-Ipaja',
       destination: 'Ikeja',
       fare: 150,
-      trip_date: '20/07/2019 06:00',
+      trip_date: '2019-07-23 15:30 +01:00',
     }, {
       origin: 'Fadeyi',
       destination: 'Mile12',
       fare: 100,
-      trip_date: '20/07/2019 12:00',
+      trip_date: '2019-07-23 12:30 +01:00',
     }, {
       origin: 'Badagry',
       destination: 'Mile2',
       fare: 350,
-      trip_date: '20/07/2019 13:30',
+      trip_date: '2019-07-23 13:30 +01:00',
     }];
     const tripNumber = Math.floor(Math.random() * trips.length);
     return trips[tripNumber];

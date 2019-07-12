@@ -9,4 +9,4 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/c0a81fbbefa50b8b0dc4/maintainability)](https://codeclimate.com/github/OlawaleJoseph/Learning/maintainability)
 
 
-A simple bus booking api.
+A simple public bus transportation booking server.

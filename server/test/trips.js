@@ -58,7 +58,7 @@ describe('Trips', () => {
       origin: 'Yaba',
       destination: 'Maryland',
       fare: 100,
-      trip_date: '22/07/2019 11:30:00',
+      trip_date: '13/07/2019 12:30:00',
       bus_id: bus2.bus_id,
     };
   });
@@ -86,7 +86,7 @@ describe('Trips', () => {
         .request(app)
         .post('/api/v1/trips')
         .set('x-access-token', admin.token)
-        .send();
+        .send({});
       assert.equal(res.status, 201, 'Should return 201 status code for success');
       assert.hasAllKeys(res.body, ['status', 'data'], 'Response body should have succes and data keys');
       assert.hasAllKeys(res.body.data, ['trip_id', 'bus_id', 'origin', 'destination', 'fare', 'trip_date', 'status']);

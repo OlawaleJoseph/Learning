@@ -3,5 +3,6 @@ node_modules
 .env
 lcov-info
 bash.exe.stackdump
-coverage/
-build/
+coverage
+build
+.gitignore

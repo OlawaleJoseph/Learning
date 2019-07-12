@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npm run clean && babel ./server -d ./build",
     "clean": "rm -rf ./build && mkdir build",
-    "devStart": "nodemon --exec babel-node index.js",
+    "devStart": "nodemon --exec babel-node ./server/index.js",
     "start": "node ./build/index.js",
     "test": "cross-env NODE_ENV=test && npm run resetTables && nyc --require @babel/register --require @babel/polyfill mocha  --timeout 20000 --exit",
     "generate-lcov": "nyc report --reporter=text-lcov > lcov-info",
@@ -14,8 +14,8 @@
     "codeclimate-coverage": "codeclimate-test-reporter < lcov-info", 
     "coverage": "npm run test && npm run generate-lcov && npm run coveralls-coverage && npm run codeclimate-coverage",
     "lint": "./node_modules/.bin/eslint index.js",
-    "dropTables": "babel-node ./models/tables dropTables",
-    "createTables": "babel-node ./models/tables createTables",
+    "dropTables": "babel-node ./server/models/tables dropTables",
+    "createTables": "babel-node ./server/models/tables createTables",
     "resetTables": "npm run dropTables && npm run createTables"
   },
   "keywords": [],

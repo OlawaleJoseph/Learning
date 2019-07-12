@@ -15,7 +15,7 @@ env:
   - secure: qqpjJJmoo1qhY96gtnVTuFjnOTz5ddrB2Lrua8r8CToDQPjvbW/BDxZtledmmxkeH28Q7BrAcEWnBXii9mkhhCrygkSwONBeGHDsbAZZ46yir6qQDFfxvILLEiuf0Msjy9OYAGrIjefHw9jo0tNhTa0F+66mOToyH1zxbtfDBFwjh+3RCxaddSyWzMouDg2j2EId2l3LHZTxg/kRwFn2HjCIDu1YAZxuManzjtKipxE0NG4YGFiEBTucbaH9nMCTI7R0x5MY7an6ML1Y+xu/Pzt+odlJxVt5c5j4yyoR9nm1cGn4MT0dawFayQAB9tQtgWDlfaWoMBEFXl+khJZ7fd7ayjXeH8Znmi8oMYZ/ONOTTXd/sHLfeNqxnNY62dGvG0y/XZFhjnBym+iLb6S0qgPN8QKY0op31gZ64hRhq15NImkaauxAsHZIlbhfFnbgPsNLMXqGXR9jptqiYLKDRtv4Z4Mwoh6Z5VoazE8BWeM6rvZZSTLowOJ1ckWiaUaIqkmXl848F3MWmoKbd9Z6tmj9QLAmFpcSqcRWEZkCMTQECCfhBOrXGysQQ5fsowt6NGDz4YLMPJXscdN7dYHH4IqclHRGdE+Ge3Lrey8R+XpbH+oh/dkSw2BM4GScHL174PtcI1Z9z+PkAbvOc6AWrb9R56JLl8kYTa2BOYL17AM=
 before_script:
 - psql -c 'create database busFarerTest;' -U postgres
-- psql -c "CREATE USER walesdam WITH PASSWORD null;" -U postgres
+- psql -c "CREATE USER walesdam WITH PASSWORD damilola88;" -U postgres
 - npm run build
 script:
 - npm run test

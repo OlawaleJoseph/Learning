@@ -187,6 +187,7 @@ describe('Trips', () => {
       assert.equal(res.status, 200);
       assert.isArray(res.body.data);
       res.body.data.forEach((trip) => {
+        console.log(res.body)
         assert.include(trip, { origin: 'YABA' }, 'It should return the trip(s) that matches the query');
       });
     });

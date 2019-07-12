@@ -6,7 +6,7 @@ class TripHelperFunctions {
   static async createTrip(body) {
     let bus_id; let origin; let destination; let trip_date; let
       fare;
-    if (Object.keys(body).length > 0) {
+    if (body.bus_id && body.origin) {
       ({
         origin, destination, trip_date, fare, bus_id,
       } = body);

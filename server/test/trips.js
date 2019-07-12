@@ -51,14 +51,14 @@ describe('Trips', () => {
       origin: 'Lekki',
       destination: 'CMS',
       fare: 200,
-      trip_date: '12/07/2019 15:30:00',
+      trip_date: '2019-07-02 15:30:00 +01:00',
       bus_id: bus.bus_id,
     };
     trip2Obj = {
       origin: 'Yaba',
       destination: 'Maryland',
       fare: 100,
-      trip_date: '13/07/2019 12:30:00',
+      trip_date: '2019-07-13 12:30:00 +01:00',
       bus_id: bus2.bus_id,
     };
   });

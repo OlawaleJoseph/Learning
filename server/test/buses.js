@@ -114,7 +114,6 @@ describe('Buses', () => {
       const res = await chai.request(app)
         .get(`/api/v1/buses/${newBus.bus_id}`)
         .set('x-access-token', admin.token);
-
       assert.equal(res.status, 200, 'Should return a status code of 200');
       assert.hasAllKeys(res.body, ['status', 'data'], 'Response body should have status and data keys');
       assert.isObject(res.body.data, 'Data should be an object');

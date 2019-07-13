@@ -7,9 +7,9 @@ const router = express();
 
 
 router.post('/', [validateToken, validateBooking], Booking.createBooking);
-router.get('/:id', [validateParam, validateToken], Booking.findABooking);
+router.get('/:bookingId', [validateParam, validateToken], Booking.findABooking);
 router.get('/', validateToken, Booking.findAllBookings);
-router.patch('/:id', [validateParam, validateToken], Booking.updateSeat);
-router.delete('/:id', [validateToken], Booking.deleteBooking);
+router.patch('/:bookingId', [validateParam, validateToken], Booking.updateSeat);
+router.delete('/:bookingId', [validateToken], Booking.deleteBooking);
 
 export default router;

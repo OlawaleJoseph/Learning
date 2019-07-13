@@ -53,7 +53,7 @@ class Bus {
 
   static async findABus(req, res) {
     try {
-      const bus = await helperFunction.findBusById(req.params.id);
+      const bus = await helperFunction.findBusById(req.params.busId);
 
       const { seats, ...busObj } = bus;
       return res.status(200).json({
@@ -70,7 +70,7 @@ class Bus {
 
   static async deleteBus(req, res) {
     try {
-      await helperFunction.deleteBus(req.params.id);
+      await helperFunction.deleteBus(req.params.busId);
       res.status(204).json({
         status: 'success',
         data: [],

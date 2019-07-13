@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.post('/', [validateTrip, validateToken, checkAdmin], Trip.createTrip);
 router.get('/', [validateQuery, validateToken], Trip.findAllTrips);
-router.get('/:id', [validateParam, validateToken], Trip.findATrip);
-router.patch('/:id', [validateParam, validateToken, checkAdmin], Trip.updateTripStatus);
+router.get('/:tripId', [validateParam, validateToken], Trip.findATrip);
+router.patch('/:tripId', [validateParam, validateToken, checkAdmin], Trip.updateTripStatus);
 
 export default router;

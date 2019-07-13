@@ -18,7 +18,7 @@ class Trip {
 
   static async findATrip(req, res) {
     try {
-      const { trip_completed, ...foundTrip } = await Trips.findTrip(req.params.id);
+      const { trip_completed, ...foundTrip } = await Trips.findTrip(req.params.tripId);
       return res.status(200).json({
         status: 'success',
         data: foundTrip,
@@ -51,7 +51,7 @@ class Trip {
 
   static async updateTripStatus(req, res) {
     try {
-      const updatedtrip = await Trips.updateTripStatus(req.params.id);
+      const updatedtrip = await Trips.updateTripStatus(req.params.tripId);
       return res.status(200).json({
         status: 'success',
         data: updatedtrip,

@@ -8,6 +8,6 @@ const router = express.Router();
 
 router.post('/', [validateToken, checkAdmin, validateBus], Bus.createBus);
 router.get('/', [validateToken, checkAdmin], Bus.findAllBuses);
-router.get('/:id', [validateParam, validateToken, checkAdmin], Bus.findABus);
+router.get('/:busId', [validateParam, validateToken, checkAdmin], Bus.findABus);
 
 export default router;

@@ -81,17 +81,6 @@ describe('Trips', () => {
       assert.hasAllKeys(res.body.data, ['trip_id', 'bus_id', 'origin', 'destination', 'fare', 'trip_date', 'status']);
     });
 
-    it('Should create a random trip without any input', async () => {
-      const res = await chai
-        .request(app)
-        .post('/api/v1/trips')
-        .set('x-access-token', admin.token)
-        .send({});
-      assert.equal(res.status, 201, 'Should return 201 status code for success');
-      assert.hasAllKeys(res.body, ['status', 'data'], 'Response body should have succes and data keys');
-      assert.hasAllKeys(res.body.data, ['trip_id', 'bus_id', 'origin', 'destination', 'fare', 'trip_date', 'status']);
-    });
-
     it('Should return 403 error for a non admin user', async () => {
       const res = await chai
         .request(app)

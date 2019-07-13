@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.post('/signup', [validateSignUp], User.create);
 router.post('/login', [validateLogin], User.login);
-router.get('/users/:id', [validateParam, validateToken], User.findUser);
+router.get('/users/:userId', [validateParam, validateToken], User.findUser);
 
 
 export default router;

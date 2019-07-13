@@ -4,19 +4,9 @@ import Bus from './bus';
 
 class TripHelperFunctions {
   static async createTrip(body) {
-    let bus_id; let origin; let destination; let trip_date; let
-      fare;
-    if (body.bus_id && body.origin) {
-      ({
-        origin, destination, trip_date, fare, bus_id,
-      } = body);
-    } else {
-      bus_id = await TripHelperFunctions.pickBus();
-      const trip = TripHelperFunctions.generateTrip();
-      ({
-        origin, destination, trip_date, fare,
-      } = trip);
-    }
+    const {
+      origin, destination, trip_date, fare, bus_id,
+    } = body;
     try {
       const bus = await Bus.findBusById(bus_id);
       if (!bus.available) { throw new Error('The bus with the given Id is on another trip'); }
@@ -118,52 +108,6 @@ class TripHelperFunctions {
     const randomNumber = Math.floor(Math.random() * availableBuses.length);
     const bus = availableBuses[randomNumber];
     return bus.bus_id;
-  }
-
-  static generateTrip() {
-    const trips = [{
-      origin: 'Ketu',
-      destination: 'Ikorodu',
-      fare: 100,
-      trip_date: '2019-07-23 17:30 +01:00',
-    }, {
-      origin: 'Ikorodu',
-      destination: 'Ketu',
-      fare: 100,
-      trip_date: '2019-07-23 18:30 +01:00',
-    }, {
-      origin: 'Maryland',
-      destination: 'CMS',
-      fare: 200,
-      trip_date: '2019-07-23 17:30 +01:00',
-    }, {
-      origin: 'Obalende',
-      destination: 'Ajah',
-      fare: 250,
-      trip_date: '2019-07-23 14:30 +01:00',
-    }, {
-      origin: 'Yaba',
-      destination: 'Apapa',
-      fare: 300,
-      trip_date: '2019-07-23 06:30 +01:00',
-    }, {
-      origin: 'Iyana-Ipaja',
-      destination: 'Ikeja',
-      fare: 150,
-      trip_date: '2019-07-23 15:30 +01:00',
-    }, {
-      origin: 'Fadeyi',
-      destination: 'Mile12',
-      fare: 100,
-      trip_date: '2019-07-23 12:30 +01:00',
-    }, {
-      origin: 'Badagry',
-      destination: 'Mile2',
-      fare: 350,
-      trip_date: '2019-07-23 13:30 +01:00',
-    }];
-    const tripNumber = Math.floor(Math.random() * trips.length);
-    return trips[tripNumber];
   }
 }
 

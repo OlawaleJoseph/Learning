@@ -69,7 +69,7 @@ class User {
 
   static async findUser(req, res) {
     try {
-      const foundUser = await helperFunctions.getUserById(req.user, req.params.id);
+      const foundUser = await helperFunctions.getUserById(req.user, req.params.userId);
       if (!foundUser[0]) {
         return res.status(404).json({
           status: 'error',

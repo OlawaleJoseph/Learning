@@ -34,8 +34,9 @@ class Bookings {
   }
 
   static async findABooking(req, res) {
+    console.log(req.params)
     try {
-      const foundBooking = await Helper.findABooking(req.params.id);
+      const foundBooking = await Helper.findABooking(req.params.bookingId);
       try {
         verifyUser(req.user, foundBooking.user_id);
       } catch (error) {
@@ -81,7 +82,7 @@ class Bookings {
 
   static async deleteBooking(req, res) {
     try {
-      const booking = await Helper.deleteBooking(req.params.id, req.user);
+      const booking = await Helper.deleteBooking(req.params.bookingId, req.user);
       if (!booking) {
         return res.status(404).json({
           status: 'error',
@@ -107,7 +108,7 @@ class Bookings {
         message: 'Invalid Booking Number',
       });
     }
-    const bookingToUpdate = await Helper.findABooking(req.params.id);
+    const bookingToUpdate = await Helper.findABooking(req.params.bookingId);
     if (!bookingToUpdate.booking_id) {
       return res.status(404).json({
         status: 'error',
@@ -125,7 +126,7 @@ class Bookings {
       verifyUser(req.user, bookingToUpdate.user_id);
       const busId = bookingToUpdate.bus_id;
       await Helper.changeSeat(busId, oldSeat, req.body.seatNumber, bookingToUpdate.booking_id);
-      const updatedBooking = await Helper.findABooking(req.params.id);
+      const updatedBooking = await Helper.findABooking(req.params.bookingId);
       return res.status(200).json({
         status: 'success',
         data: updatedBooking,

@@ -93,41 +93,33 @@ export const validateBus = async (req, res, next) => {
 const errorMessage = (path) => {
   let msg = '';
   if (/trip/.test(path)) {
-    msg = 'Trip';
+    msg = 'trip';
   } else if (/bus/.test(path)) {
-    msg = 'Bus';
+    msg = 'bus';
   } else if (/booking/.test(path)) {
-    msg = 'Booking';
+    msg = 'booking';
   } else {
-    msg = 'User';
+    msg = 'user';
   }
-  return new Error(`Invalid ${msg} id`);
+  return msg;
 };
 
 export const validateParam = async (req, res, next) => {
-  if (!req.params.id) {
+  const path = errorMessage(req.originalUrl);
+  if (!req.params[`${path}Id`]) {
     return res.status(400).json({
       status: 'error',
-      message: 'Id not given',
+      message: `${path} id not given`,
     });
   }
-  const schema = Joi.object().keys({
-    id: Joi.number()
-      .integer()
-      .positive()
-      .required()
-      .error(errorMessage(req.baseUrl)),
-  });
-  try {
-    await Joi.validate(req.params, schema);
-    next();
-  } catch (error) {
-    res.status(400).json({
+
+  if (!parseInt(req.params[`${path}Id`], 10)) {
+    return res.status(400).json({
       status: 'error',
-      message: error.message,
+      message: `Invalid ${path} Id`,
     });
   }
-  return null;
+  return next();
 };
 
 const bookingSchema = Joi.object().keys({

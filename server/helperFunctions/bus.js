@@ -84,9 +84,7 @@ class Bus {
           boardingBus.seats.splice(index, 1);
         }
       } else {
-        index = Math.floor(Math.random() * boardingBus.seats.length);
-        seatNumber = boardingBus.seats[index];
-        boardingBus.seats.splice(index, 1);
+        seatNumber = boardingBus.seats.shift();
       }
       await query(updateQuery, [boardingBus.seats, bus_id]);
       return seatNumber;

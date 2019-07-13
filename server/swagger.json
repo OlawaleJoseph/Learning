@@ -7,7 +7,8 @@
         "termsOfService": "http://swagger.io/terms/",
         
         "license": {
-            "name": "MIT"
+            "name": "MIT",
+            "url" : "https://opensource.org/licenses/MIT"
         }
     },
     "host": "localhost:3000",
@@ -525,7 +526,16 @@
                         "description": "Booking not found"
                     },
                     "204": {
-                        "description": "Booking updated deleted"
+                        "description": "Booking updated deleted",
+                        "type": "object",
+                        "properties": {
+                            "status" : {
+                                "schema": {
+                                    "$ref": "#definitions/success"
+                                }
+                            }
+                        }
+                        
                     }
                 },
                 "security": [
@@ -548,9 +558,23 @@
         }
     },
     "definitions": {
-        "Bus": {
+        "success" : {
+            "type": "string",
+            "example" : "success"
+        },
+        "error": {
+            "type": "string",
+            "example": "error"
+        },
+        "busObj": {
             "type": "object",
-            "required": ["manufacturer","model", "capacity", "year", "number_plate"],
+            "required": [
+                "manufacturer",
+                "model",
+                "capacity",
+                "year",
+                "number_plate"
+            ],
             "properties": {
                 "manufacturer": {
                     "type": "string",
@@ -574,7 +598,37 @@
                 }
             }
         },
-        "Login": {
+        "bus": {
+            "type": "object",
+            "required": ["manufacturer","model", "capacity", "year", "number_plate"],
+            "properties": {
+                "bus_id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "manufacturer": {
+                    "type": "string",
+                    "example": "Toyota"
+                },
+                "model": {
+                    "type": "string",
+                    "example": "Hiace"
+                },
+                "year": {
+                    "type": "number",
+                    "example": "2016"
+                },
+                "capacity": {
+                    "type": "number",
+                    "example": "22"
+                },
+                "number_plate": {
+                    "type": "string",
+                    "example": "IKJ-655TY"
+                }
+            }
+        },
+        "login": {
             "type": "object",
             "required": [
                 "email",
@@ -592,7 +646,7 @@
                 }
             }
         },
-        "User": {
+        "userObj": {
             "type": "object",
             "required": [
                 "first_name",
@@ -620,7 +674,53 @@
                 }
             }
         },
-        "Trip": {
+        "user": {
+            "type": "object",
+
+            "properties": {
+                "user_id": {
+                    "type": "integer",
+                    "example": "1"
+                },
+                "token": {
+                    "type": "JWT"
+                },
+                "is_admin": {
+                    "type": "boolean",
+                    "example": false
+                }
+            }
+        },
+        "trip": {
+            "type": "object",
+            "properties": {
+                "trip_id" : {
+                    "type": "number",
+                    "example": "1"
+                },
+                "bus_id": {
+                    "type": "number",
+                    "example": "2"
+                },
+                "origin": {
+                    "type": "string",
+                    "example": "Yaba"
+                },
+                "destination": {
+                    "type": "string",
+                    "example": "Ketu"
+                },
+                "fare": {
+                    "type": "number",
+                    "example": "200"
+                },
+                "trip_date": {
+                    "type": "string",
+                    "example": "2019-08-22"
+                }
+            }
+        },
+        "tripObj": {
             "type": "object",
             "required": [
                 "bus_id",
@@ -652,7 +752,7 @@
                 }
             }
         },
-        "Booking": {
+        "bookingObj": {
             "type": "object",
             "required": [
                 "trip_id"
@@ -665,6 +765,93 @@
                 "seat_number": {
                     "type": "number",
                     "example": "11"
+                }
+                
+            }
+        },
+        "booking": {
+            "type": "object",
+            "properties": {
+                "trip_id": {
+                    "type": "number",
+                    "example": "3"
+                },
+                "seat_number": {
+                    "type": "number",
+                    "example": "11"
+                },
+                "first_name": {
+                    "type": "string",
+                    "example": "James"
+                },
+                "last_name": {
+                    "type": "string",
+                    "example": "Jane"
+                },
+                "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "janejames@gmail.com"
+                },
+                "bus_id": {
+                    "type": "number",
+                    "example": "3"
+                },
+                "origin": {
+                    "type": "string",
+                    "example": "Yaba"
+                },
+                "destination": {
+                    "type": "string",
+                    "example": "Ketu"
+                },
+                "fare": {
+                    "type": "number",
+                    "example": "200"
+                },
+                "trip_date": {
+                    "type": "string",
+                    "example": "2019-08-22"
+                },
+                "user_id": {
+                    "type": "number",
+                    "example": "4"
+                }
+            }
+        },
+        "bookings": {
+            "type": "object",
+            "properties": {
+                "booking": {
+                "type": "object",
+                "$ref" : "#/definitions/Booking"
+                }
+            }
+        },
+        "buses": {
+            "type": "object",
+            "properties": {
+                "bus": {
+                    "type": "array",
+                    "items": {
+                        "type" : "object",
+                        "schema": {
+                            "$ref": "#/definitions/Bus"
+                        }
+                    }
+                    
+                }
+            }
+        },
+        "trips": {
+            "type": "object",
+            "properties": {
+                "trip": {
+                    "type": "object",
+                    "addtionalProperties": {
+                        "$ref": "#/definitions/Trip"
+                    }
+                    
                 }
             }
         }

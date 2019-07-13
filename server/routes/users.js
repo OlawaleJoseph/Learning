@@ -7,7 +7,7 @@ const router = express.Router();
 
 
 router.post('/signup', [validateSignUp], User.create);
-router.post('/login', [validateLogin], User.login);
+router.post('/signin', [validateLogin], User.login);
 router.get('/users/:userId', [validateParam, validateToken], User.findUser);
 
 

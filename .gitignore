@@ -4,5 +4,4 @@ node_modules
 lcov-info
 bash.exe.stackdump
 coverage
-build
 .gitignore

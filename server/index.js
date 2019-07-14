@@ -12,6 +12,10 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+
+app.use('/', (req, res) => {
+  res.send('Welcome to Wayfarer api')
+});
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 app.use('/api/v1/auth', userRouter);
 app.use('/api/v1/buses', busRouter);

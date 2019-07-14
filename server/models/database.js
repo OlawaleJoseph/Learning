@@ -1,5 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import dotenv from 'dotenv';
+import debug from 'debug';
 import { Pool } from 'pg';
 
 dotenv.config();
@@ -19,5 +20,5 @@ export const pool = new Pool({
 });
 
 pool.on('connect', () => {
-  console.log('Connected to db');
+  debug('http')('Connected to db using debug');
 });

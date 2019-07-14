@@ -32,8 +32,14 @@ class Trip {
   }
 
   static async findAllTrips(req, res) {
+    let allTrips;
     try {
-      let allTrips = await Trips.getAlltrips();
+      const trips = await Trips.getAlltrips();
+      if (req.user.isAdmin) {
+        allTrips = trips;
+      } else {
+        allTrips = trips.filter(trip => trip.status === 'active');
+      }
       if (Object.keys(req.query).length > 0 && allTrips.length > 0) {
         allTrips = Trips.filterTrips(req.query, allTrips);
       }

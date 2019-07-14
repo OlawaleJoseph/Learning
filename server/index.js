@@ -1,5 +1,6 @@
 import express from 'express';
 import swaggerUI from 'swagger-ui-express';
+import debug from 'debug';
 import userRouter from './routes/users';
 import busRouter from './routes/buses';
 import tripRouter from './routes/trips';
@@ -22,7 +23,7 @@ app.get('/api/v1', (req, res) => {
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-  console.log(`App is listening on Port ${port}`);
+  debug('http')(`App is listening on Port ${port}`);
 });
 
 export default app;

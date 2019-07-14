@@ -165,6 +165,9 @@ describe('Trips', () => {
 
       assert.equal(res.status, 200);
       assert.isArray(res.body.data);
+      res.body.data.forEach((trip) => {
+        assert.equal(trip.status, 'active', 'Users should only see active trips');
+      });
     });
 
     it('Should get all trips based on the query search', async () => {

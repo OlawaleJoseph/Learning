@@ -82,7 +82,7 @@ export const createTables = async () => {
   }
 };
 export const dropTables = async () => {
-  const dropTablesQuery = 'DROP TABLE IF EXISTS users, buses, trips, bookings';
+  const dropTablesQuery = 'DROP TABLE IF EXISTS users, buses, trips, bookings CASCADE';
 
   try {
     await pool.query(dropTablesQuery);

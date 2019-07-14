@@ -19,7 +19,7 @@ var _trips = _interopRequireDefault(require("./routes/trips"));
 
 var _bookings = _interopRequireDefault(require("./routes/bookings"));
 
-var _swagger = _interopRequireDefault(require("./swagger.json"));
+var _swagger = _interopRequireDefault(require("../swagger.json"));
 
 var app = (0, _express["default"])();
 app.use(_express["default"].json());

@@ -4,14 +4,18 @@ import { Pool } from 'pg';
 
 dotenv.config();
 
-const connectionString = process.env.NODE_ENV === 'development' ? process.env.devDb : process.env.dbUrl;
+let connectionString;
+
+if (process.env.NODE_ENV === 'production') {
+  connectionString = process.env.DATABASE_URL;
+} else if (process.env.NODE_ENV === 'test') {
+  connectionString = process.env.testDb;
+} else {
+  connectionString = process.env.devDb;
+}
 
 export const pool = new Pool({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASS,
-  port: 5432,
+  connectionString,
 });
 
 pool.on('connect', () => {

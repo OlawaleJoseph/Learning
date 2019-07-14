@@ -14,15 +14,22 @@ var _pg = require("pg");
 /* eslint-disable import/prefer-default-export */
 _dotenv["default"].config();
 
-var connectionString = process.env.NODE_ENV === 'development' ? process.env.devDb : process.env.dbUrl;
+var connectionString;
+
+if (process.env.NODE_ENV === 'production') {
+  connectionString = process.env.DATABASE_URL;
+} else if (process.env.NODE_ENV === 'test') {
+  connectionString = process.env.testDb;
+} else {
+  connectionString = process.env.devDb;
+}
+
 var pool = new _pg.Pool({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASS,
-  port: 5432
+  connectionString: connectionString
 });
 exports.pool = pool;
 pool.on('connect', function () {
+  console.log(process.env.NODE_ENV);
+  console.log(connectionString);
   console.log('Connected to db');
 });

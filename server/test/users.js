@@ -101,16 +101,16 @@ describe('Users', () => {
     });
   });
 
-  describe('Login users', () => {
-    it('Should login users', async () => {
-      const loginData = {
+  describe('signin users', () => {
+    it('Should signin users', async () => {
+      const signinData = {
         email: user.email,
         password: 'mypassword',
       };
       const res = await chai
         .request(app)
-        .post('/api/v1/auth/login')
-        .send(loginData);
+        .post('/api/v1/auth/signin')
+        .send(signinData);
       assert.equal(res.status, 200, 'Should return 200 status code');
       assert.equal(
         res.body.status,
@@ -127,7 +127,7 @@ describe('Users', () => {
       };
       const res = await chai
         .request(app)
-        .post('/api/v1/auth/login')
+        .post('/api/v1/auth/signin')
         .send(wrongData);
       assert.equal(res.status, 404, 'Should return 404 status code');
       assert.equal(
@@ -149,7 +149,7 @@ describe('Users', () => {
       };
       const res = await chai
         .request(app)
-        .post('/api/v1/auth/login')
+        .post('/api/v1/auth/signin')
         .send(wrongData);
       assert.equal(res.status, 400, 'Should return 400 status code');
       assert.equal(
@@ -171,7 +171,7 @@ describe('Users', () => {
       };
       const res = await chai
         .request(app)
-        .post('/api/v1/auth/login')
+        .post('/api/v1/auth/signin')
         .send(wrongData);
       assert.equal(res.status, 400, 'Should return 400 status code');
       assert.equal(
@@ -192,7 +192,7 @@ describe('Users', () => {
       const res = await chai
         .request(app)
         .get(`/api/v1/auth/users/${user.user_id}`)
-        .set('x-access-token', user.token);
+        .set('token', user.token);
       assert.equal(res.status, 200, 'Status code should 200 for success');
       assert.equal(res.body.data.user_id, user.user_id, 'The user id given should be equal to the user id in the response object');
       assert.isObject(res.body.data, 'Data should be an object');
@@ -219,7 +219,7 @@ describe('Users', () => {
       const res = await chai
         .request(app)
         .get(`/api/v1/auth/users/${createdUser.user_id}`)
-        .set('x-access-token', user.token);
+        .set('token', user.token);
       assert.equal(res.status, 401, 'Status code should 400 for error');
       assert.equal(res.body.status, 'error');
       assert.isString(res.body.message, 'Message should be a string');

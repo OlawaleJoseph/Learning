@@ -19,6 +19,7 @@ const signUpSchema = Joi.object().keys({
     .error(new Error('Last name cannot be empty')),
   email,
   password,
+  is_admin: Joi.boolean().error(new Error('Admin status can either be true or false')),
 });
 
 const loginSchema = Joi.object({
@@ -54,7 +55,7 @@ const setAdminStatus = userEmail => (!!userEmail.endsWith('@wayfarer.com'));
 export const validateSignUp = async (req, res, next) => {
   try {
     await Joi.validate(req.body, signUpSchema);
-    req.body.isAdmin = setAdminStatus(req.body.email);
+    req.body.isAdmin = req.body.is_admin || setAdminStatus(req.body.email);
     next();
   } catch (error) {
     res.status(400).json({

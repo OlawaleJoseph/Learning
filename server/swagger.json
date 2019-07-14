@@ -13,9 +13,16 @@
     },
     "host": "localhost:3000",
     "basePath": "/api/v1",
+    "securityDefinitions": {
+        "token": {
+            "type": "apiKey",
+            "name": "token",
+            "in": "header"
+        }
+    },
     "tags": [
         {
-            "name": "Users",
+            "name": "Auth",
             "description": "API Endpoints for users"
         },
         {
@@ -38,7 +45,7 @@
         "/auth/signup": {
             "post": {
                 "tags": [
-                    "Users"
+                    "Auth"
                 ],
                 "summary": "Registers a new user in the app",
                 "description": "It accepts user's details as parameters and saves it in the database",
@@ -56,20 +63,37 @@
                         "description": "User object that needs to be registered in the app",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/User"
+                            "$ref": "#/definitions/userObj"
                         }
                     }
                 ],
                 "responses": {
                     "409": {
-                        "description": " A User with an email address already exist "
+                        "description": " A User with an email address already exist ",
+                        "type": "object",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
                     },
 
                     "400": {
-                        "description": "Incomplete or invalid parameters"
+                        "description": "Incomplete or invalid parameters",
+                        "type": "object",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
                     },
                     "201": {
-                        "description": "Account was successfully created"
+                        "description": "User's account was successfully created",
+                        "type": "object",
+                        "properties": {
+                            "status":{
+                                "$ref": "#/definitions/success"
+                        },
+                        "data": {
+                            "$ref": "#/definitions/user"
+                        }    
+                    }           
                     }
                 }
             }
@@ -78,7 +102,7 @@
         "/auth/signin": {
             "post": {
                 "tags": [
-                    "Users"
+                    "Auth"
                 ],
                 "summary": "Login",
                 "description": "A registered user can login with email and password",
@@ -96,19 +120,36 @@
                         "description": "User object credentials needed to log in the user",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/Login"
+                            "$ref": "#/definitions/login"
                         }
                     }
                 ],
                 "responses": {
                     "401": {
-                        "description": "Incorrect login credentials"
+                        "description": "Incorrect login credentials",
+                        "type": "object",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
                     },
                     "400": {
-                        "description": "Validation error"
+                        "description": "Validation error",
+                        "type": "object",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
                     },
                     "200": {
-                        "description": "Successfully login a user"
+                        "description": "Successfully login a user",
+                        "type": "object",
+                        "properties": {
+                            "status": {
+                                "$ref": "#/definitions/success"
+                            },
+                            "data": {
+                                "$ref": "#/definitions/user"
+                            }
+                        }
                     }
                 }
             }
@@ -126,13 +167,30 @@
                 ],
                 "responses": {
                     "403": {
-                        "description": "Forbidden"
+                        "description": "Forbidden",
+                        "type": "object",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
                     },
                     "401": {
-                        "description": "Invalid Token"
+                        "description": "Invalid Token",
+                        "type": "object",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
                     },
                     "200": {
-                        "description": "Successfully fetched all bank accounts"
+                        "description": "Successfully fetched all bank accounts",
+                        "type": "object",
+                        "properties": {
+                            "status": {
+                                "$ref": "#/definitions/success"
+                            },
+                            "data": {
+                                "$ref": "#/definitions/buses"
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -161,22 +219,43 @@
                         "description": "Bus object needed to create bus",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/Bus"
+                            "$ref": "#/definitions/busObj"
                         }
                     }
                 ],
                 "responses": {
                     "401": {
-                        "description": "Uauthorized"
+                        "description": "Uauthorized",
+                        "type": "object",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
                     },
                     "400": {
-                        "description": "Bad Request"
+                        "description": "Bad Request",
+                        "type": "object",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
                     },
                     "409": {
-                        "description": "Bus with this number plate is already registered"
+                        "description": "Bus with this number plate is already registered",
+                        "type": "object",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
                     },
                     "201": {
-                        "description": "Successfully Created an Account"
+                        "description": "Successfully Created a new Bus",
+                        "type": "object",
+                        "properties": {
+                            "status": {
+                                "$ref": "#/definitions/success"
+                            },
+                            "data": {
+                                "$ref": "#/definitions/bus"
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -209,16 +288,37 @@
                 ],
                 "responses": {
                     "403": {
-                        "description": "Forbidden"
+                        "description": "Forbidden",
+                        "type": "object",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
                     },
                     "401": {
-                        "description": "Uauthorized "
+                        "description": "Uauthorized ",
+                        "type": "object",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
                     },
                     "404": {
-                        "description": "Bus doesn't exist"
+                        "description": "Bus doesn't exist",
+                        "type": "object",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
                     },
                     "200": {
-                        "description": "Status was successfully updated"
+                        "description": "success",
+                        "type": "object",
+                        "properties": {
+                            "status": {
+                                "$ref": "#/definitions/success"
+                            },
+                            "data": {
+                                "$ref": "#/definitions/bus"
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -245,16 +345,37 @@
                 },
                 "responses": {
                     "400": {
-                        "description": "Invalid query strings"
+                        "description": "Invalid query strings",
+                        "type": "object",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
                     },
                     "401" : {
-                        "description": "Invalid Token"
+                        "description": "Invalid Token",
+                        "type": "object",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
                     },
                     "403": {
-                        "description": "No Token Provided"
+                        "description": "No Token Provided",
+                        "type": "object",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
                     },
                     "200": {
-                        "description": "All trips retrieved successfully"
+                        "description": "All trips retrieved successfully",
+                        "type": "object",
+                        "properties": {
+                            "status": {
+                                "$ref": "#/definitions/success"
+                            },
+                            "data": {
+                                "$ref": "#/definitions/trips"
+                            }
+                        }
                     }
 
                 },
@@ -271,25 +392,50 @@
                 "operationId": "createTrip",
                 "consumes": ["application/json"],
                 "produces": ["application/json"],
-                "parameters": {
+                "parameters": [{
                     "in": "body",
-                    "name": "newTrip",
+                    "name": "body",
                     "description": "Trip Object needed to create a trip",
                     "required": false,
-                    "type": "object"
-                },
+                    "type": "object",
+                    "schema": {
+                        "$ref": "#/definitions/tripObj"
+                    }
+                }],
+                
                 "responses": {
                     "400":{
-                        "description": "Input Validation Error | No token supplied"
+                        "description": "Input Validation Error | No token supplied",
+                        "type": "object",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
                     },
                     "401": {
-                        "description": "Unauthorised"
+                        "description": "Unauthorised",
+                        "type": "object",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
                     },
                     "403": {
-                        "description": "Forbidden"
+                        "description": "Forbidden",
+                        "type": "object",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
                     },
-                    "200": {
-                        "description": "Trip created Successfully"
+                    "201": {
+                        "description": "Trip created Successfully",
+                        "type": "object",
+                        "properties": {
+                            "status": {
+                                "$ref": "#/definitions/success"
+                            },
+                            "data": {
+                                "$ref": "#/definitions/trip"
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -309,25 +455,49 @@
                 "operationId": "getATrip",
                 "consumes": ["application/json"],
                 "produces": ["application/json"],
-                "parameters": {
+                "parameters": [{
                     "name": "tripId",
                     "in": "path",
                     "description": "The id of the trip being retrieved",
                     "required": true,
                     "type": "integer"
+                }],
+                "schema": {
+                    "$ref": "#/definitions/tripObj"
                 },
                 "responses": {
                     "400": {
-                        "description": "Bad Request"
+                        "description": "Bad Request",
+                        "type": "object",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
                     },
                     "401": {
-                        "description": "Invalid Token"
+                        "description": "Invalid Token",
+                        "type": "object",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
                     },
                     "404": {
-                        "description": "Trip not found"
+                        "description": "Trip not found",
+                        "type": "object",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
                     },
                     "200" : {
-                        "description": "Trip retrieved successfully"
+                        "description": "Trip retrieved successfully",
+                        "type": "object",
+                        "properties": {
+                            "status": {
+                                "$ref": "#/definitions/success"
+                            },
+                            "data": {
+                                "$ref": "#/definitions/trip"
+                            }
+                        }
                     }
                 },
                 "security" : [
@@ -349,25 +519,46 @@
                 "produces": [
                     "application/json"
                 ],
-                "parameters": {
+                "parameters": [{
                     "name": "tripId",
                     "in": "path",
                     "description": "The id of the trip being updated",
                     "required": true,
                     "type": "integer"
-                },
+                }],
                 "responses": {
                     "400": {
-                        "description": "Bad Request"
+                        "description": "Bad Request",
+                        "type": "object",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
                     },
                     "401": {
-                        "description": "Invalid Token"
+                        "description": "Invalid Token",
+                        "type": "object",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
                     },
                     "404": {
-                        "description": "Trip not found"
+                        "description": "Trip not found",
+                        "type": "object",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
                     },
                     "200": {
-                        "description": "Trip updated successfully"
+                        "description": "Trip updated successfully",
+                        "type": "object",
+                        "properties": {
+                            "status": {
+                                "$ref": "#/definitions/success"
+                            },
+                            "data": {
+                                "$ref": "#/definitions/trip"
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -395,13 +586,30 @@
                 
                 "responses": {
                     "401": {
-                        "description": "Invalid Token"
+                        "description": "Invalid Token",
+                        "type": "object",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
                     },
                     "403": {
-                        "description": "User can not see another user's bookings"
+                        "description": "User can not see another user's bookings",
+                        "type": "object",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
                     },
                     "200": {
-                        "description": "All bookings retrieved successfully"
+                        "description": "All bookings retrieved successfully",
+                        "type": "object",
+                        "properties": {
+                            "status": {
+                                "$ref": "#/definitions/success"
+                            },
+                            "data": {
+                                "$ref": "#/definitions/bookings"
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -423,28 +631,49 @@
                 "produces": [
                     "application/json"
                 ],
-                "parameters": {
+                "parameters": [{
                     "in": "body",
-                    "name": "newBooking",
+                    "name": "body",
                     "description": "Booking Object needed to create a trip",
                     "required": false,
                     "type": "object",
                     "schema": {
-                        "$ref":"#/definitions/Booking"
+                        "$ref":"#/definitions/bookingObj"
                     }
-                },
+                }],
                 "responses": {
                     "400": {
-                        "description": "Input Validation Error"
+                        "description": "Input Validation Error",
+                        "type": "object",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
                     },
                     "401": {
-                        "description": "No Token provided | Invalid Token"
+                        "description": "No Token provided | Invalid Token",
+                        "type": "object",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
                     },
                     "422": {
-                        "description": "Trip cancelled"
+                        "description": "Trip cancelled",
+                        "type": "object",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
                     },
                     "200": {
-                        "description": "Trip created Successfully"
+                        "description": "Booking created Successfully",
+                        "type": "object",
+                        "properties": {
+                            "status": {
+                                "$ref": "#/definitions/success"
+                            },
+                            "data": {
+                                "$ref": "#/definitions/booking"
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -468,25 +697,46 @@
                 "produces": [
                     "application/json"
                 ],
-                "parameters": {
+                "parameters": [{
                     "name": "bookingId",
                     "in": "path",
                     "description": "The id of the booking being retrieved",
                     "required": true,
                     "type": "integer"
-                },
+                }],
                 "responses": {
                     "400": {
-                        "description": "Invalid Id"
+                        "description": "Invalid Id",
+                        "type": "object",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
                     },
                     "401": {
-                        "description": "Invalid Token"
+                        "description": "Invalid Token",
+                        "type": "object",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
                     },
                     "404": {
-                        "description": "Booking not found"
+                        "description": "Booking not found",
+                        "type": "object",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
                     },
                     "200": {
-                        "description": "Booking retrieved successfully"
+                        "description": "Booking retrieved successfully",
+                        "type": "object",
+                        "properties": {
+                            "status": {
+                                "$ref": "#/definitions/success"
+                            },
+                            "data": {
+                                "$ref": "#/definitions/booking"
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -508,33 +758,47 @@
                 "produces": [
                     "application/json"
                 ],
-                "parameters": {
+                "parameters": [{
                     "name": "bookingId",
                     "in": "path",
                     "description": "The id of the booking being deleted",
                     "required": true,
                     "type": "integer"
-                },
+                }],
                 "responses": {
                     "400": {
-                        "description": "Invalid Booking Id"
+                        "description": "Invalid Booking Id",
+                        "type": "object",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
                     },
                     "401": {
-                        "description": "Invalid Token"
+                        "description": "Invalid Token",
+                        "type": "object",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
                     },
                     "404": {
-                        "description": "Booking not found"
+                        "description": "Booking not found",
+                        "type": "object",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
                     },
                     "204": {
-                        "description": "Booking updated deleted",
+                        "description": "Booking deleted",
                         "type": "object",
                         "properties": {
-                            "status" : {
-                                "schema": {
-                                    "$ref": "#definitions/success"
-                                }
+                            "status": {
+                                "$ref": "#/definitions/success"
+                            },
+                            "data": {
+                                "type": "object"
                             }
                         }
+
                         
                     }
                 },
@@ -546,25 +810,36 @@
             }
         }
     },
-        
-    "securityDefinitions": {
-        "token": {
-            "type": "apiKey",
-            "scheme": "bearer",
-            "description": "JWT token is received after users register / login,",
-            "name": "token",
-            "in": "header",
-            "bearerFormat": "JWT"
-        }
-    },
     "definitions": {
-        "success" : {
+        "deleteBooking" : {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "example": "success"
+                },
+                "data": {
+                    "type": "object"
+                }
+            }
+        },
+        "success": {
             "type": "string",
-            "example" : "success"
+            "example": "success"
+            
         },
         "error": {
-            "type": "string",
-            "example": "error"
+            "type": "object",
+            "properties": {
+                "status" : {
+                    "type": "string",
+                    "example": "error"
+                },
+                "message": {
+                    "type": "string",
+                    "example": "Error message"
+                }
+            }
         },
         "busObj": {
             "type": "object",
@@ -600,7 +875,6 @@
         },
         "bus": {
             "type": "object",
-            "required": ["manufacturer","model", "capacity", "year", "number_plate"],
             "properties": {
                 "bus_id": {
                     "type": "integer",
@@ -671,6 +945,10 @@
                 "password": {
                     "type": "string",
                     "example": "password"
+                },
+                "is_admin": {
+                    "type": "boolean",
+                    "example": true
                 }
             }
         },
@@ -683,7 +961,7 @@
                     "example": "1"
                 },
                 "token": {
-                    "type": "JWT"
+                    "type": "string"
                 },
                 "is_admin": {
                     "type": "boolean",
@@ -820,39 +1098,25 @@
             }
         },
         "bookings": {
-            "type": "object",
-            "properties": {
-                "booking": {
+            "type": "array",
+            "items": {
                 "type": "object",
-                "$ref" : "#/definitions/Booking"
-                }
+                "$ref": "#/definitions/booking"
+                
             }
         },
         "buses": {
-            "type": "object",
-            "properties": {
-                "bus": {
-                    "type": "array",
-                    "items": {
-                        "type" : "object",
-                        "schema": {
-                            "$ref": "#/definitions/Bus"
-                        }
-                    }
-                    
-                }
+            "type": "array",
+            "items": {
+                "type": "object",
+                "$ref": "#/definitions/bus"
             }
         },
         "trips": {
-            "type": "object",
-            "properties": {
-                "trip": {
-                    "type": "object",
-                    "addtionalProperties": {
-                        "$ref": "#/definitions/Trip"
-                    }
-                    
-                }
+            "type": "array",
+            "items": {
+                "type": "object",
+                "$ref": "#/definitions/trip"
             }
         }
     },

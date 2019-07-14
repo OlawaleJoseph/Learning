@@ -47,7 +47,7 @@ describe('Buses', () => {
       };
       const res = await chai.request(app)
         .post('/api/v1/buses')
-        .set('x-access-token', admin.token)
+        .set('token', admin.token)
         .send(busData2);
       assert.equal(res.status, 201, 'Should respond with 201 status code');
       assert.equal(res.body.status, 'success', 'Json response status should be success');
@@ -65,7 +65,7 @@ describe('Buses', () => {
       };
       const res = await chai.request(app)
         .post('/api/v1/buses')
-        .set('x-access-token', admin.token)
+        .set('token', admin.token)
         .send(busData);
       assert.equal(res.status, 409, 'Should respond with 409 status code');
       assert.equal(res.body.status, 'error', 'Json response status should be error');
@@ -82,7 +82,7 @@ describe('Buses', () => {
       };
       const res = await chai.request(app)
         .post('/api/v1/buses')
-        .set('x-access-token', admin.token)
+        .set('token', admin.token)
         .send(busData3);
       assert.equal(res.status, 400, 'Should respond with 400 status code');
       assert.equal(res.body.status, 'error', 'Json response status should be error');
@@ -100,7 +100,7 @@ describe('Buses', () => {
       };
       const res = await chai.request(app)
         .post('/api/v1/buses')
-        .set('x-access-token', 'invalidtoken')
+        .set('token', 'invalidtoken')
         .send(busData4);
       assert.equal(res.status, 400, 'Should respond with 400 status code');
       assert.equal(res.body.status, 'error', 'Json response status should be error');
@@ -113,7 +113,7 @@ describe('Buses', () => {
     it('Should return a bus with the given id', async () => {
       const res = await chai.request(app)
         .get(`/api/v1/buses/${newBus.bus_id}`)
-        .set('x-access-token', admin.token);
+        .set('token', admin.token);
       assert.equal(res.status, 200, 'Should return a status code of 200');
       assert.hasAllKeys(res.body, ['status', 'data'], 'Response body should have status and data keys');
       assert.isObject(res.body.data, 'Data should be an object');
@@ -124,7 +124,7 @@ describe('Buses', () => {
     it('Should return an error with invalid bus id', async () => {
       const res = await chai.request(app)
         .get('/api/v1/buses/h')
-        .set('x-access-token', admin.token);
+        .set('token', admin.token);
       assert.equal(res.status, 400, 'Should return a status code of 400');
       assert.hasAllKeys(res.body, ['status', 'message'], 'Response body should have status and message keys');
     });
@@ -132,7 +132,7 @@ describe('Buses', () => {
     it('Should return an error when the bus_id is not found', async () => {
       const res = await chai.request(app)
         .get('/api/v1/buses/1000')
-        .set('x-access-token', admin.token);
+        .set('token', admin.token);
       assert.equal(res.status, 404, 'Should return a status code of 404');
       assert.hasAllKeys(res.body, ['status', 'message'], 'Response body should have status and message keys');
     });
@@ -140,7 +140,7 @@ describe('Buses', () => {
     it('Should return an error with invalid token', async () => {
       const res = await chai.request(app)
         .get('/api/v1/buses/g')
-        .set('x-access-token', 'token');
+        .set('token', 'token');
       assert.equal(res.status, 400, 'Should return a status code of 400');
       assert.hasAllKeys(res.body, ['status', 'message'], 'Response body should have status and message keys');
     });
@@ -150,7 +150,7 @@ describe('Buses', () => {
     it('Should return all Buses', async () => {
       const res = await chai.request(app)
         .get('/api/v1/buses')
-        .set('x-access-token', admin.token);
+        .set('token', admin.token);
       assert.equal(res.status, 200, 'Should return status code of 200');
       assert.isArray(res.body.data, 'Should return an array of Buses');
       res.body.data.forEach((bus) => {
@@ -162,7 +162,7 @@ describe('Buses', () => {
     it('Should return an error for invalid token', async () => {
       const res = await chai.request(app)
         .get('/api/v1/buses')
-        .set('x-access-token', 'token');
+        .set('token', 'token');
       assert.equal(res.status, 400, 'Should return status code of 400');
       assert.hasAllKeys(res.body, ['status', 'message'], 'Response body should contain status and message');
       assert.equal(res.body.status, 'error', 'Status should be error');

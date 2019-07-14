@@ -9,7 +9,7 @@ class User {
   static async create(req, res) {
     try {
       const newUser = await helperFunctions.createUser(req.body);
-      return res.header('x-access-token', newUser.token).status(201).json({
+      return res.header('token', newUser.token).status(201).json({
         status: 'success',
         data: {
           user_id: newUser.user_id,
@@ -52,7 +52,7 @@ class User {
         email: user.email,
       };
       const token = await generateToken(payload);
-      return res.header('x-access-token', token).status(200).json({
+      return res.header('token', token).status(200).json({
         status: 'success',
         data: {
           token,

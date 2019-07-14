@@ -74,7 +74,7 @@ describe('Trips', () => {
       const res = await chai
         .request(app)
         .post('/api/v1/trips')
-        .set('x-access-token', admin.token)
+        .set('token', admin.token)
         .send(tripObj);
       assert.equal(res.status, 201, 'Should return 201 status code for success');
       assert.hasAllKeys(res.body, ['status', 'data'], 'Response body should have succes and data keys');
@@ -85,7 +85,7 @@ describe('Trips', () => {
       const res = await chai
         .request(app)
         .post('/api/v1/trips')
-        .set('x-access-token', user.token)
+        .set('token', user.token)
         .send(tripObj);
       assert.equal(res.status, 403, 'Should return 403 status code for non admin users');
       assert.hasAllKeys(res.body, ['status', 'message'], 'Response body should have error and message keys');
@@ -103,7 +103,7 @@ describe('Trips', () => {
       const res = await chai
         .request(app)
         .post('/api/v1/trips')
-        .set('x-access-token', admin.token)
+        .set('token', admin.token)
         .send(tripObj2);
       assert.equal(res.status, 422, 'Should return 422 status code for non admin users');
       assert.hasAllKeys(res.body, ['status', 'message'], 'Response body should have error and message keys');
@@ -120,7 +120,7 @@ describe('Trips', () => {
       const res = await chai
         .request(app)
         .post('/api/v1/trips')
-        .set('x-access-token', admin.token)
+        .set('token', admin.token)
         .send(tripObj1);
       assert.equal(res.status, 400, 'Should return 400 status code for non admin users');
       assert.hasAllKeys(res.body, ['status', 'message'], 'Response body should have error and message keys');
@@ -132,7 +132,7 @@ describe('Trips', () => {
       const trip = await Trip.createTrip(tripObj);
       const res = await chai.request(app)
         .get(`/api/v1/trips/${trip.trip_id}`)
-        .set('x-access-token', user.token);
+        .set('token', user.token);
       assert.equal(res.status, 200, 'Should return 200 for success');
       assert.equal(trip.trip_id, res.body.data.trip_id, 'Trip id retrieved should match the one sent on success');
       assert.hasAnyKeys(res.body.data, ['origin', 'destination', 'fare', 'trip_date', 'trip_id', 'bus_id']);
@@ -141,7 +141,7 @@ describe('Trips', () => {
     it('Should return a 400 error with an invalid trip id', async () => {
       const res = await chai.request(app)
         .get('/api/v1/trips/h')
-        .set('x-access-token', user.token);
+        .set('token', user.token);
       assert.equal(res.status, 400, 'Should return 400 for invalid trip id');
       assert.hasAllKeys(res.body, ['status', 'message'], 'response should have status and message keys');
       assert.equal(res.body.status, 'error', 'Response status should be error for invalid trip id');
@@ -150,7 +150,7 @@ describe('Trips', () => {
     it('Should return a 404 error if trip does not exist', async () => {
       const res = await chai.request(app)
         .get('/api/v1/trips/900')
-        .set('x-access-token', user.token);
+        .set('token', user.token);
       assert.equal(res.status, 404, 'Should return 404 if trip does not exist');
       assert.hasAllKeys(res.body, ['status', 'message'], 'response should have status and message keys');
       assert.equal(res.body.status, 'error', 'Response status should be error for non existent trip');
@@ -161,7 +161,7 @@ describe('Trips', () => {
     it('Should get all Trips', async () => {
       const res = await chai.request(app)
         .get('/api/v1/trips')
-        .set('x-access-token', user.token);
+        .set('token', user.token);
 
       assert.equal(res.status, 200);
       assert.isArray(res.body.data);
@@ -172,7 +172,7 @@ describe('Trips', () => {
       await Trip.createTrip(trip2Obj);
       const res = await chai.request(app)
         .get('/api/v1/trips/?origin=yaba')
-        .set('x-access-token', user.token);
+        .set('token', user.token);
       assert.equal(res.status, 200);
       assert.isArray(res.body.data);
       res.body.data.forEach((trip) => {
@@ -186,7 +186,7 @@ describe('Trips', () => {
       const newTrip = await Trip.createTrip(tripObj);
       const res = await chai.request(app)
         .patch(`/api/v1/trips/${newTrip.trip_id}`)
-        .set('x-access-token', admin.token);
+        .set('token', admin.token);
       assert.equal(res.status, 200, 'Success status should be 200');
       assert.equal(res.body.data[0].status, 'cancelled', 'Trip status should be changed from active to cancelled');
       assert.hasAnyKeys(res.body.data[0], ['trip_id', 'bus_id', 'trip_date'], 'The response object should conatin trip id, date, bus id');
@@ -196,7 +196,7 @@ describe('Trips', () => {
       const newTrip = await Trip.createTrip(tripObj);
       const res = await chai.request(app)
         .patch(`/api/v1/trips/${newTrip.trip_id}`)
-        .set('x-access-token', user.token);
+        .set('token', user.token);
 
       assert.equal(res.status, 403, 'Should return 403 status code for non admin users');
       assert.hasAllKeys(res.body, ['status', 'message'], 'Response should have status and message keys');
@@ -207,7 +207,7 @@ describe('Trips', () => {
       await Trip.createTrip(tripObj);
       const res = await chai.request(app)
         .patch('/api/v1/trips/l')
-        .set('x-access-token', admin.token);
+        .set('token', admin.token);
 
       assert.equal(res.status, 400, 'Should return 400 for invalid trip id');
       assert.hasAllKeys(res.body, ['status', 'message'], 'Response should have status and message keys');
@@ -217,7 +217,7 @@ describe('Trips', () => {
     it('Should return a 404 for non existent trip', async () => {
       const res = await chai.request(app)
         .patch('/api/v1/trips/9000')
-        .set('x-access-token', admin.token);
+        .set('token', admin.token);
 
       assert.equal(res.status, 404, 'Should return 400 for non existent trip');
       assert.hasAllKeys(res.body, ['status', 'message'], 'Response should have status and message keys');

@@ -72,7 +72,7 @@ describe('BOOKING', () => {
       };
       const res = await chai.request(app)
         .post('/api/v1/bookings')
-        .set('x-access-token', user1.token)
+        .set('token', user1.token)
         .send(newBooking);
       assert.equal(res.status, 201, 'Status code should b 201 if a booking is created');
       assert.equal(res.body.status, 'success');
@@ -83,7 +83,7 @@ describe('BOOKING', () => {
     it('Should create new booking with a random seat number if seat_number is not provided', async () => {
       const res = await chai.request(app)
         .post('/api/v1/bookings')
-        .set('x-access-token', user1.token)
+        .set('token', user1.token)
         .send({ trip_id: trip.trip_id });
       assert.equal(res.status, 201, 'Status code should b 201 if a booking is created');
       assert.equal(res.body.status, 'success');
@@ -94,7 +94,7 @@ describe('BOOKING', () => {
     it('Should return an error if trip id is not specified', async () => {
       const res = await chai.request(app)
         .post('/api/v1/bookings')
-        .set('x-access-token', user1.token)
+        .set('token', user1.token)
         .send();
       assert.equal(res.status, 400, '400 status code is expected');
       assert.equal(res.body.status, 'error');
@@ -116,7 +116,7 @@ describe('BOOKING', () => {
       };
       const res = await chai.request(app)
         .post('/api/v1/bookings')
-        .set('x-access-token', user1.token)
+        .set('token', user1.token)
         .send(newTrip);
       assert.equal(res.status, 422, '422 status code is expected');
       assert.equal(res.body.status, 'error');
@@ -129,7 +129,7 @@ describe('BOOKING', () => {
       const newBooking = await Booking.createBooking(booking, user1.user_id);
       const res = await chai.request(app)
         .get(`/api/v1/bookings/${newBooking.booking_id}`)
-        .set('x-access-token', user1.token);
+        .set('token', user1.token);
 
       assert.equal(res.status, 200);
       assert.equal(res.body.data.user_id, user1.user_id);
@@ -141,7 +141,7 @@ describe('BOOKING', () => {
     it('Should return an error for invalid booking id', async () => {
       const res = await chai.request(app)
         .get('/api/v1/bookings/k')
-        .set('x-access-token', user1.token);
+        .set('token', user1.token);
 
       assert.equal(res.status, 400);
       assert.equal(res.body.status, 'error');
@@ -163,7 +163,7 @@ describe('BOOKING', () => {
       const newBooking = await Booking.createBooking(booking, user1.user_id);
       const res = await chai.request(app)
         .get(`/api/v1/bookings/${newBooking.booking_id}`)
-        .set('x-access-token', user2.token);
+        .set('token', user2.token);
       assert.equal(res.status, 403);
       assert.equal(res.body.status, 'error');
       assert.hasAllKeys(res.body, ['status', 'message']);
@@ -173,7 +173,7 @@ describe('BOOKING', () => {
       await Booking.createBooking({ trip_id: trip.trip_id, seat_number: 9 }, user1.user_id);
       const res = await chai.request(app)
         .get('/api/v1/bookings/90000')
-        .set('x-access-token', user1.token);
+        .set('token', user1.token);
       assert.equal(res.status, 404);
       assert.equal(res.body.status, 'error');
       assert.hasAllKeys(res.body, ['status', 'message']);
@@ -186,7 +186,7 @@ describe('BOOKING', () => {
       await Booking.createBooking({ trip_id: trip.trip_id, seat_number: 6 }, user2.user_id);
       const res = await chai.request(app)
         .get('/api/v1/bookings')
-        .set('x-access-token', admin.token);
+        .set('token', admin.token);
 
       assert.equal(res.status, 200);
       assert.equal(res.body.status, 'success');
@@ -198,7 +198,7 @@ describe('BOOKING', () => {
       await Booking.createBooking({ trip_id: trip.trip_id, seat_number: 9 }, user1.user_id);
       const res = await chai.request(app)
         .get('/api/v1/bookings')
-        .set('x-access-token', admin.token);
+        .set('token', admin.token);
 
       assert.equal(res.status, 200);
       assert.equal(res.body.status, 'success');
@@ -222,7 +222,7 @@ describe('BOOKING', () => {
       await Booking.createBooking({ trip_id: trip.trip_id, seat_number: 9 }, user1.user_id);
       const res = await chai.request(app)
         .get('/api/v1/bookings')
-        .set('x-access-token', 'ghh76h');
+        .set('token', 'ghh76h');
 
       assert.equal(res.status, 400);
       assert.equal(res.body.status, 'error');
@@ -236,7 +236,7 @@ describe('BOOKING', () => {
       const booking = await Booking.createBooking(bookingObj, user1.user_id);
       const res = await chai.request(app)
         .delete(`/api/v1/bookings/${booking.booking_id}`)
-        .set('x-access-token', user1.token);
+        .set('token', user1.token);
       assert.equal(res.status, 204);
       assert.isUndefined(res.body.data);
     });
@@ -255,7 +255,7 @@ describe('BOOKING', () => {
       const booking = await Booking.createBooking(bookingObj, user1.user_id);
       const res = await chai.request(app)
         .delete(`/api/v1/bookings/${booking.booking_id}`)
-        .set('x-access-token', user2.token);
+        .set('token', user2.token);
 
       assert.equal(res.status, 403);
       assert.equal(res.body.status, 'error');

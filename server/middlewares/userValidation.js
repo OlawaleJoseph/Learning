@@ -9,7 +9,8 @@ export const validateToken = async (req, res, next) => {
     });
   }
   try {
-    const decodedToken = await jwt.verify(token, process.env.jwt_secret);
+    const realtoken = token.slice(7);
+    const decodedToken = await jwt.verify(realtoken, process.env.jwt_secret);
     req.user = decodedToken;
     next();
   } catch (error) {

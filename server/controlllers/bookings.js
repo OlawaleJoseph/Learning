@@ -34,17 +34,16 @@ class Bookings {
   }
 
   static async findABooking(req, res) {
-    console.log(req.params)
     try {
-      const foundBooking = await Helper.findABooking(req.params.bookingId);
-      try {
+        const foundBooking = await Helper.findABooking(req.params.bookingId);
+       try {
         verifyUser(req.user, foundBooking.user_id);
-      } catch (error) {
+      }catch (error) {
         return res.status(403).json({
           status: 'error',
           message: error.message,
         });
-      }
+      };
       return res.status(200).json({
         status: 'success',
         data: foundBooking,

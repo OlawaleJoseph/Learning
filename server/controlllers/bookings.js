@@ -34,7 +34,6 @@ class Bookings {
   }
 
   static async findABooking(req, res) {
-    console.log(req.params)
     try {
       const foundBooking = await Helper.findABooking(req.params.bookingId);
       try {

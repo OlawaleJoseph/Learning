@@ -262,4 +262,5 @@ describe('BOOKING', () => {
       assert.hasAllKeys(res.body, ['status', 'message']);
     });
   });
+  
 });
